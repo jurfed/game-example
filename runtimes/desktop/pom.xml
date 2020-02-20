@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.octavianonline</groupId>
+        <artifactId>wheelenium</artifactId>
+        <version>OCTAVIAN-1.23.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>wheelenium-desktop</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.octavianonline</groupId>
+            <artifactId>octavian-framework-components</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.octavianonline</groupId>
+            <artifactId>octavian-framework-particles</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.octavianonline</groupId>
+            <artifactId>octavian-framework-big-wins</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.octavianonline</groupId>
+            <artifactId>octavian-framework-control-panel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.octavianonline</groupId>
+            <artifactId>octavian-framework-network-desktop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.octavianonline</groupId>
+            <artifactId>wheelenium-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.dagger</groupId>
+            <artifactId>dagger-compiler</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atsisa.gox</groupId>
+            <artifactId>gox-reels-desktop</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- builds a standalone jar file during 'mvn package' -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.octavianonline.games.wheelenium.WheeleniumDesktopEntryPoint</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <configuration>
+                            <target>
+                                <copy todir="${path.to.copy}">
+                                    <!--<copy todir="Z:\GOX">-->
+                                    <fileset dir="${project.build.directory}">
+                                        <include name="*-jar-with-dependencies.jar"/>
+                                    </fileset>
+                                </copy>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
